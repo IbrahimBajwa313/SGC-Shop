@@ -1,9 +1,9 @@
 import Wrapper from '@/components/Wrapper'
 import React from 'react'
-
+import { motion } from 'framer-motion' 
 const about = () => {
     return (
-        <Wrapper><section className="text-gray-600 body-font">
+        <motion.Wrapper  initial={{ opacity: 0 ,scale:1,y:-50   }}  animate={{y:0,  opacity: 1, scale: 1}} transition={{ delay: 0,duration:.3,stiffness:50 }}><section className="text-gray-600 body-font">
             <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-col text-center w-full mb-20">
                     <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our Team</h1>
@@ -94,7 +94,7 @@ const about = () => {
                 </div>
             </div>
         </section>
-        </Wrapper>
+        </motion.Wrapper>
     )
 }
 

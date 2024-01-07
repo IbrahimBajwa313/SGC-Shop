@@ -3,9 +3,9 @@ import Wrapper from '@/components/Wrapper'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const Category = () => {
+const Sort = () => {
     const router = useRouter()
-    const { slug } = router.query
+    const { sort } = router.query
   return (
     <div className='w-full md:py-10 min-h-screen'>
     <Wrapper>
@@ -16,13 +16,13 @@ const Category = () => {
         </div>
 
     {/* Product Grid   */}
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
+    {/* <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
             <ProductCard slug={slug} />
            
-        </div>                        
+        </div>                         */}
     </Wrapper>
       </div>
   )
 }
 
-export default Category
+export default Sort

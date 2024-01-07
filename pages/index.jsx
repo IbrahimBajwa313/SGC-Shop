@@ -9,10 +9,9 @@ export default function Home() {
   const [ref, inView] = useInView();
   return (
     
-    <motion.main
-        initial={{ opacity: 0 ,scale:1,y:-50   }}  animate={{y:0,  opacity: 1, scale: 1}} transition={{ delay: 0,duration:.3,stiffness:50 }} className='overflow-x-hidden z-40'>
-      {/* <div className="bg-black text-white">jnjnjnjjnk</div> */}
-      <HeroBanner></HeroBanner>
+    <main className='overflow-x-hidden z-40'>
+
+      <HeroBanner />
 
       <Wrapper>
         <div className=' text-center max-w-[800px] mt-[50px] md:mt-[80px] mx-auto'>
@@ -24,12 +23,12 @@ export default function Home() {
 
         {/* Product Grid   */}
         <div ref={ref} className="mb-52">
-        {inView&&<motion.div  initial={{ opacity: 0,y:-100}} transition={{ type:'tween',duration:.7,delay:.2 ,stiffness: 100 }} animate={{ y:0,x: 0,rotate:0, opacity: 1, scale: 1 }}className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
+        {<div  className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
           <ProductCard />
-        </motion.div>}
+        </div>}
 
 </div>
       </Wrapper>
-    </motion.main>
+    </main>
   )
 }

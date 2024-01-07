@@ -7,9 +7,11 @@ import { IoMdHeartEmpty } from 'react-icons/Io'
 import { MyContext } from '@/pages/_app'
 import { useRouter } from 'next/router'
 import AddToCartNotification from '@/components/AddToCartNotification'
+import { motion } from 'framer-motion'
 
 export default function ProductDetails() {
 const [Items, setItems] = useState([]);
+
 useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,14 +63,14 @@ useEffect(() => {
     }
     
     return (
-        <div className='w-full md:py-20'>
-            {console.log('asas',Items[0]?._id)}
-            {console.log(slug)}
+        <motion.div  initial={{ opacity: 0 ,scale:1,y:-10   }}  animate={{y:0,  opacity: 1, scale: 1}} transition={{ delay: 0,duration:.3,stiffness:50 }} className='w-full min-h-screen md:py-20'>
+            {/* {console.log('asas',Items[0]?._id)}
+            {console.log(slug)} */}
 {
 Items.map((key)=>{
     return <>{key?._id==slug&&<div>
        <Wrapper>
-                <div className='flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]'>
+                <div className=' flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]'>
                     {/* left col start  */}
                     <div className='w-full md:w-auto flex-[1.5] max-w-[500px] lg:max-w-full mx-auto lg:mx-0'><ProductDetailCrousel img={key.img} /> </div>
                     {/* left col end  */}
@@ -78,7 +80,7 @@ Items.map((key)=>{
 
                         {/* Product Title */}
                         <div className='font-bold text-[31px] mb-2'>
-                            {key.tytle}
+                            {key.title}
                         </div>
 
                         {/* Product Subtitle */}
@@ -88,7 +90,7 @@ Items.map((key)=>{
 
                         {/* Price Details */}
                         <div className='text-lg font-semibold'>
-                            Price : {key.price} Rs
+                            Price : {key.price} $
                         </div>
                         <div className='text-sm text-black/[0.5]'>
                             Incl. of Texes
@@ -185,7 +187,7 @@ Items.map((key)=>{
                             {/* Add To Chart Button Start */}
                             {true&& <button
                                 onClick={() => {
-                                    addToCart(slug, key.tytle, key.availableQty, key.price, size, key.color, `/productIamages/${key.img}/thumbnail.webp`, key.category)
+                                    addToCart(slug, key.title, key.availableQty, key.price, size, key.color, `/productIamages/${key.img}/thumbnail.webp`, key.category)
                                     setIsCartVisible(true);
                                     setTimeout(() => {
                                         setIsCartVisible(false);
@@ -240,7 +242,7 @@ Items.map((key)=>{
 })
 
 }
-                    </div>
+                    </motion.div>
     )
 }
 

@@ -37,7 +37,7 @@ const CartItem = () => {
 
               {/* Product Price Start */}
               <div className='text-sm md:text-md font-bold text-black/[0.5] mt-2 '>
-                Price : {cart[k].price}/. Rs
+                Price : {cart[k].price}/. $
               </div>
               {/* Product Price End */}
 

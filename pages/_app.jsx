@@ -126,7 +126,7 @@ export default function App({ Component, pageProps }) {
         <Header cart={cart}/>
       </Headroom>
 
-      <productInfo.Provider value={{ cart, addToCart, oneMinusQty, clearCart, subTotal,oneAddQty,delQty }}  {...pageProps} >
+      <productInfo.Provider className={"dark"} value={{ cart, addToCart, oneMinusQty, clearCart, subTotal,oneAddQty,delQty }}  {...pageProps} >
 
         <Component />
 

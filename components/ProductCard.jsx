@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-
-const ProductCard = () => {
-  const [products, setProducts] = useState([]); // Change variable name to 'products'
+const ProductCard = ({ slug }) => {
+  const [products, setProducts] = useState([]);
+  const [Category, setCategory] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -11,7 +13,6 @@ const ProductCard = () => {
         const response = await fetch('http://localhost:3000/api/getProducts');
         const result = await response.json();
 
-        // Ensure the response has a "products" property and it's an array before setting state
         if (result && Array.isArray(result.products)) {
           setProducts(result.products);
         } else {
@@ -25,20 +26,32 @@ const ProductCard = () => {
     fetchData();
   }, []);
 
-
+  useEffect(() => {
+    setCategory(slug);
+  }, [slug]);
 
   return (
     <>
       {products.map((item) => {
-        // Calculate the discount percentage
         const discountPercentage = Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100);
-  
+
         return (
-          <div key={item._id} className='bg-white shadow-xl duration-200 hover:scale-105 cursor-pointer hover:shadow-2xl'>
+          <motion.div
+            key={item._id}
+            initial={{ opacity: 0, scale: 1, y: -50 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ delay: 0, duration: 0.3, stiffness: 50 }}
+            className='bg-white shadow-xl duration-200 hover:scale-105 cursor-pointer hover:shadow-2xl'
+          >
             <Link href={`/product/${item._id}`}>
-              <img className='w-full' src={`/productIamages/${item.img}/thumbnail.webp`} alt="Product-Image" />
+              <Image
+                src={`/productIamages/${item.img}/thumbnail.webp`}
+                alt="Product-Image"
+                width={400}
+                height={400}
+              />
               <div className='p-4 text-black-[0.9]'>
-                <h2 className='text-lg font-medium'>{item.tytle}</h2>
+                <h2 className='text-lg font-medium'>{item.title}</h2>
                 <div className='flex items-center text-black-[0.8]'>
                   <p className='mr-2 text-lg font-semibold'>{item.price}$</p>
                   <p className='text-base font-medium line-through'>{item.originalPrice}$</p>
@@ -46,12 +59,11 @@ const ProductCard = () => {
                 </div>
               </div>
             </Link>
-          </div>
+          </motion.div>
         );
       })}
     </>
   );
-  
-}
+};
 
 export default ProductCard;

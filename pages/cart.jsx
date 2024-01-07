@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { MyContext } from './_app'
+import { motion } from 'framer-motion'
 
 const Cart = () => {
 
@@ -12,7 +13,7 @@ const Cart = () => {
 
 
     return (
-        <div className='md:my-20 w-full '>
+        <motion.div  initial={{ opacity: 0 ,scale:1,y:-20   }}  animate={{y:0,  opacity: 1, scale: 1}} transition={{ delay: 0,duration:.3,stiffness:50 }} className='md:my-20 w-full min-h-screen '>
             <Wrapper>
 
                 {/* Shoong Cart Heading */}
@@ -45,7 +46,7 @@ const Cart = () => {
                                 </div>
 
                                 <div className='uppercase text-md md:text-lg font-medium text-black'>
-                                    {localStorage.getItem("SubTotal")}/. Rs
+                                    {localStorage.getItem("SubTotal")}/. $
                                 </div>
 
                             </div>
@@ -99,7 +100,7 @@ const Cart = () => {
                 </div>}
 
             </Wrapper>
-        </div>
+        </motion.div>
     )
 }
 

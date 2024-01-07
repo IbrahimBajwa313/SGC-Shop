@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
+import { motion } from 'framer-motion'
 
 const Contact = () => {
   return (
-    <section className="text-gray-600 body-font relative">
+    <motion.section  initial={{ opacity: 0 ,scale:1,y:-10   }}  animate={{y:0,  opacity: 1, scale: 1}} transition={{ delay: 0,duration:.3,stiffness:50 }} className="text-gray-600 body-font relative">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Contact Us</h1>
@@ -69,7 +70,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
