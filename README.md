@@ -5,6 +5,7 @@ I started working on this project after learning and understanding Next.js. This
 First, run the development server:
 
 ```bash
+I started working on this project after learning and understanding Next.js. This was my first project in Next.js. I have added many features in it including searching projects by names, sorting them by price or by category and many more features.
 npm run dev
 # or
 yarn dev
