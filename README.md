@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
-I started working on this project after learning and understanding Next.js.<br> This was my first project in Next.js.<br> I have added many features in it including searching projects by names,<br> sorting them by price or by category and many more features.
+I started working on this project after learning and understanding Next.js. This was my first project in Next.js.  I have added many features in it including searching projects by names, sorting them by price or by category and many more features.
 npm run dev
 # or
 yarn dev
