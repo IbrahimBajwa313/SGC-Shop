@@ -20,7 +20,7 @@ const handleSearch = async () => {
  
 
       // Fetch products from the API
-      const response = await fetch('http://localhost:3000/api/getProducts');
+      const response = await fetch('/api/getProducts');
       const result = await response.json();
 
       // Filter products based on the search query

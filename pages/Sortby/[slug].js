@@ -20,12 +20,12 @@ const handleSearch = async () => {
 
       // Fetch products from the API
     if(slug=='Price high to low'){
-      const response = await fetch('http://localhost:3000/api/getProducts?sortBy=highToLow');
+      const response = await fetch('/api/getProducts?sortBy=highToLow');
       const result = await response.json();
       setProduct(result.products)
       console.log(result)
 }if(slug=='Price low to high'){
-    const response = await fetch('http://localhost:3000/api/getProducts?sortBy=lowToHigh');
+    const response = await fetch('/api/getProducts?sortBy=lowToHigh');
     const result = await response.json();
     setProduct(result.products)
 }

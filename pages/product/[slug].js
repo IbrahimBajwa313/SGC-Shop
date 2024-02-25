@@ -3,7 +3,7 @@ import ProductDetailCrousel from '@/components/ProductDeatailCrousel'
 import RelatedProducts from '@/components/RelatedProducts'
 import Wrapper from '@/components/Wrapper'
 import React, { useState,useEffect } from 'react'
-import { IoMdHeartEmpty } from 'react-icons/Io'
+import { IoMdHeartEmpty } from 'react-icons/io'
 import { MyContext } from '@/pages/_app'
 import { useRouter } from 'next/router'
 import AddToCartNotification from '@/components/AddToCartNotification'
@@ -15,7 +15,7 @@ const [Items, setItems] = useState([]);
 useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/getProducts');
+        const response = await fetch('/api/getProducts');
         const result = await response.json();
 
         // Ensure the response has a "products" property and it's an array before setting state
@@ -47,7 +47,7 @@ useEffect(() => {
 
     // Pin Code Service Availability 
     const checkServiceAvailability = async () => {
-        let pins = await fetch("http://localhost:3000/api/pincode");
+        let pins = await fetch("/api/pincode");
         let pinJson = await pins.json();
         if (pinJson.includes(+pin)) {
             setService(true)
@@ -167,9 +167,9 @@ Items.map((key)=>{
                             {!pin && <div className='text-lg font-semibold'>Enter Postal Code Address</div>}
                             <div className='my-4 '>
 
-                                <form onSubmit={(e) => { e.preventDefault() }} method="post">
-                                    <input onChange={onChangePin} type="text" placeholder='Enter your Pincode' className='border px-3 py-4 rounded-3xl mr-2 border-black' />
-                                    <button onClick={checkServiceAvailability} className='bg-black border border-black text-white text-md px-16 py-4 rounded-3xl font-md transition-transform active:scale-95 hover:opacity-75  '>Check</button>
+                                <form onSubmit={(e) => { e.preventDefault() }} className='mb-8 w-full' method="post">
+                                    <input onChange={onChangePin} type="text" placeholder='Enter your Pincode' className='border px-3 sm:py-4 py-3  w-6/12 rounded-3xl mr-2 border-gray-600' />
+                                    <button onClick={checkServiceAvailability} className='bg-black border border-black text-white sm:text-md text-sm px-auto py-3  w-4/12 sm:py-4 rounded-3xl font-md transition-transform  active:scale-95 hover:opacity-75  '>Check</button>
                                 </form>
 
                             </div>
@@ -217,7 +217,7 @@ Items.map((key)=>{
                                 <div className='text-lg font-bold mb-5'>
                                     Product Details
                                 </div>
-                                <div className='text-md mb-5'>{key.desc}</div>
+                                <div className='text-md mb-5'></div>
                             </div>
                             {/* Descriptive Paragraph End */}
 

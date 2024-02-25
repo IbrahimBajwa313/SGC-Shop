@@ -13,7 +13,7 @@ const ProductCard = ({ slug,query }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/getProducts');
+        const response = await fetch('/api/getProducts');
         const result = await response.json();
 
         if (result && Array.isArray(result.products)) {

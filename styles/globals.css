@@ -23,6 +23,38 @@
     box-sizing: border-box;
     letter-spacing: 1px;
 }
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  /* Change the background color of the scrollbar track */
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  
+  /* Change the color of the scrollbar handle (thumb) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #f1f1f1;
+  }
+  /* For WebKit-based browsers */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  /* For Firefox */
+  /* Change the width and color to your desired style */
+  html {
+    scrollbar-width: thin;
+  }
+  
+  /* Change the color of the scrollbar handle (thumb) in Firefox */
+  html {
+    scrollbar-color:#111111 #f1f1f1;
+  }
+
+body{
+    overflow-x: hidden;
+}
 
 /* PRODUCT DETAILS CAROUSEL STYLING CUSTOMIZATION START */
 .productCarousel.carousel-root {

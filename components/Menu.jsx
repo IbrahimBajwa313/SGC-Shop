@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { BsChevronDown } from 'react-icons/Bs';
+import { BsChevronDown } from 'react-icons/bs';
 
 const data = [
     { id: 1, name: 'Home', url: '/' },
@@ -27,7 +27,7 @@ const subSortData = [
 const Menu = ({ showCatMenu, setShowCatMenu, showSortMenu, setShowSortMenu }) => {
     return (
         <>
-            <ul className='hidden md:flex items-center font-medium text-black '>
+            <ul className='hidden  lg:flex items-center font-medium text-black '>
                 {data.map((item) => (
                     <React.Fragment key={item.id}>
                         {item?.subMenu && (
@@ -46,12 +46,12 @@ const Menu = ({ showCatMenu, setShowCatMenu, showSortMenu, setShowSortMenu }) =>
                                 {showCatMenu && (
                                     <ul className='bg-white z-40 top-10 absolute left-4 min-w-[250px] text-black shadow-xl'>
                                         {subMenuData.map((subMenu) => (
-                                            <Link key={subMenu.id} href={`/category/${subMenu.name}`} onClick={() => setShowCatMenu(false)}>
+                                            <a key={subMenu.id} href={`/category/${subMenu.name}`} onClick={() => setShowCatMenu(false)}>
                                                 <li className='cursor-pointer flex justify-between items-center px-3 hover:shadow-sm hover:bg-gray-100 rounded-md'>
                                                     {subMenu.name}
                                                     <span className='text-sm opacity-50 '> {subMenu.doc_count}</span>
                                                 </li>
-                                            </Link>
+                                            </a >
                                         ))}
                                     </ul>
                                 )}
@@ -76,7 +76,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, showSortMenu, setShowSortMenu }) =>
 
                                             return (
                                                
-                                                    <li onClick={()=>{window.location.replace(`/Sortby/${subSortMenu.name}`)}} className='cursor-pointer flex justify-between items-center   px-3 hover:bg-black/[0.03] rounded-md'>
+                                                    <li key={subSortMenu} onClick={()=>{window.location.replace(`/Sortby/${subSortMenu.name}`)}} className='cursor-pointer flex justify-between items-center   px-3 hover:bg-black/[0.03] rounded-md'>
                                                         {subSortMenu.name}
                                                     </li>
                                                 

@@ -1,7 +1,7 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import React from 'react'
-import ProductCard from './productCard';
+import ProductCard from './ProductCard';
 import Wrapper from './Wrapper';
 
 const RelatedProducts = () => {
