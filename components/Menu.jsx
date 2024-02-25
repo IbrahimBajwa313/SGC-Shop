@@ -75,12 +75,11 @@ const Menu = ({ showCatMenu, setShowCatMenu, showSortMenu, setShowSortMenu }) =>
                                         {subSortData.map((subSortMenu) => {
 
                                             return (
-                                                <Link key={subSortMenu.id} href={`/sort/${subSortMenu.name}`} onClick={() => setShowSortMenu(false)}>
-
-                                                    <li className='cursor-pointer flex justify-between items-center   px-3 hover:bg-black/[0.03] rounded-md'>
+                                               
+                                                    <li onClick={()=>{window.location.replace(`/Sortby/${subSortMenu.name}`)}} className='cursor-pointer flex justify-between items-center   px-3 hover:bg-black/[0.03] rounded-md'>
                                                         {subSortMenu.name}
                                                     </li>
-                                                </Link>
+                                                
                                             )
                                         })}
                                     </ul>

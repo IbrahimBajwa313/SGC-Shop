@@ -37,24 +37,13 @@ const Header =   (cart) => {
 
   const handleSearch = async (query) => {
     // logic to handle search
-    console.log('Search query:', query);
+    // console.log('Search query:', query);
  
 
-      // Fetch products from the API
-      const response = await fetch('http://localhost:3000/api/getProducts');
-      const result = await response.json();
-
-      // Filter products based on the search query
-      const filteredResults = result.products.filter((product) =>
-        product.title.toLowerCase().includes(query.toLowerCase())
-      );
-
-      // Update the search results
       console.log(filteredResults);
-
-    // Navigate to SearchResults page with the search query as a parameter
-      router.push(`/search-results?query=${query}`);
-
+      
+      window.location.replace(`http://localhost:3000/category/${query}?query=${query}`);
+      // setSearchQuery('')
   };
 
    
