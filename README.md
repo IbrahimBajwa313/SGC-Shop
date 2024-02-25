@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
-
+I started working on this project after learning and understanding Next.js. This was my first project in Next.js. I have added many features in it including searching projects by names, sorting them by price or by category and many more features.
 First, run the development server:
 
 ```bash
