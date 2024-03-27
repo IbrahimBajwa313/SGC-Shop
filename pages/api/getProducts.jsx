@@ -31,18 +31,6 @@ export default connectDB(handler);
 // http://localhost:3000/api/getProducts?sortBy=highToLow (Sort by high-to-low price)
 // http://localhost:3000/api/getProducts?sortBy=lowToHigh (Sort by low-to-high price)
 
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
-// import connectDB from "@/middleware/mongoose"
-// import Product from "@/models/Product"
-
-//   const handler = async (req, res) => {
-
-//     let products = await Product.find()
-//     res.status(200).json({ products })
-
-//   }
-//   export default connectDB(handler)
 
 
 
