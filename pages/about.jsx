@@ -1,4 +1,4 @@
-import Wrapper from '@/components/Wrapper'
+import Wrapper from '../components/Wrapper'
 import React from 'react'
 import { motion } from 'framer-motion' 
 const about = () => {

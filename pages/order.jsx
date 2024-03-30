@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { MyContext } from '@/pages/_app'
+import { MyContext } from '../pages/_app'
 import React from 'react'
 
 const order = () => {
@@ -8,6 +8,7 @@ const order = () => {
 
     return (
 
+        Object.keys(cart).map((k) => {
         Object.keys(cart).map((k) => {
             return (
 

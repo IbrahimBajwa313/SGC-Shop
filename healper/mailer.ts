@@ -18,24 +18,27 @@ export const sendEmail = async ({ email, emailType, userId }) => {
 
 
         // Configure mail transporter
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
+        var transport = nodemailer.createTransport({
+            host: "sandbox.smtp.mailtrap.io",
+            port: 2525,
             auth: {
-                user: 'your-email@gmail.com',
-                pass: 'your-email-password'
+              user: "918246f55629ff",  // !! These credentials should be in env file not here
+              pass: "9d96691ad6717b"
             }
-        });
+          });
 
         // Construct email details based on emailType
         const mailOptions = {
             from: '"Ibrahim Bajwa" <ibrahimbajwa1065@gmail.com>',
             to: email,
             subject: emailType === "verify" ? "Verify Your Email" : "Reset your password",
-            text: 'This is a test email sent from Nodemailer in a Next.js API route!'
+            text: 'This is a test email sent from Nodemailer in a Next.js API route!',
+            html: `<p>Click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"} or copy and paste the link below in your browser.<br>${process.env.DOMAIN}/verifyemail?token=${hashedToken}</p>`
         };
+        
 
         // Send mail with defined transport object
-        const mailInfo = await transporter.sendMail(mailOptions);
+        const mailInfo = await transport.sendMail(mailOptions);
         
         return mailInfo;
     } catch (error) {

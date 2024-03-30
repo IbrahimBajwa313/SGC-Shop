@@ -1,8 +1,8 @@
 //  import Header from "@/pages/header";
 
-import HeroBanner from "@/components/HeroBanner";
-import ProductCard from "@/components/ProductCard";
-import Wrapper from "@/components/Wrapper";
+import HeroBanner from "../components/HeroBanner";
+import ProductCard from "../components/ProductCard";
+import Wrapper from "../components/Wrapper";
 import { useInView } from 'react-hook-inview'
 import { motion } from "framer-motion";
 

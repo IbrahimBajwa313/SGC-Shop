@@ -1,6 +1,6 @@
 
 import { useRouter } from 'next/router';
-import ProductCard from '@/components/ProductCard'; // Assuming the path is correct
+import ProductCard from '../components/ProductCard'; // Assuming the path is correct
 
 const SearchResults = () => {
   const router = useRouter();
