@@ -1,4 +1,4 @@
-import { MyContext } from '@/pages/_app'
+import { MyContext } from '..//pages/_app'
 import React from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FaCirclePlus } from "react-icons/fa6";

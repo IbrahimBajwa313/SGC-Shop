@@ -1,5 +1,5 @@
-import CartItem from '@/components/CartItem'
-import Wrapper from '@/components/Wrapper'
+import CartItem from '../components/CartItem'
+import Wrapper from '../components/Wrapper'
 import Link from 'next/link'
 import React from 'react'
 import { useEffect, useState } from 'react'

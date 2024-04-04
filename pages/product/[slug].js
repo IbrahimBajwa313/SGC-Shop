@@ -1,12 +1,12 @@
 
-import ProductDetailCrousel from '@/components/ProductDeatailCrousel'
-import RelatedProducts from '@/components/RelatedProducts'
-import Wrapper from '@/components/Wrapper'
+import ProductDetailCrousel from '../../components/ProductDeatailCrousel'
+import RelatedProducts from '../../components/RelatedProducts'
+import Wrapper from '../../components/Wrapper'
 import React, { useState, useEffect } from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
-import { MyContext } from '@/pages/_app'
+import { MyContext } from '../../pages/_app'
 import { useRouter } from 'next/router'
-import AddToCartNotification from '@/components/AddToCartNotification'
+import AddToCartNotification from '../../components/AddToCartNotification'
 import { motion } from 'framer-motion'
 
 export default function ProductDetails() {
