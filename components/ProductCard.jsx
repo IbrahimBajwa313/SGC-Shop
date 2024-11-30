@@ -28,13 +28,16 @@ const ProductCard = ({ slug, query }) => {
     fetchData();
   }, []);
 
+  if (products?.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
+      </div>
+    );
+  }
+  
   return (
-    <>
-      {isLoading ? (
-        <div className="flex justify-center items-center h-screen">
-          <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-        </div>
-      ) : (
+     
         <>
           {products?.length > 0 ? (
             // <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -80,9 +83,7 @@ const ProductCard = ({ slug, query }) => {
           ) : (
             <p className="text-center text-gray-600">No products found.</p>
           )}
-        </>
-      )}
-    </>
+        </> 
   );
 };
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FaCirclePlus } from "react-icons/fa6";
 import { FaCircleMinus } from "react-icons/fa6";
-
+import Image from 'next/image' // Import Image from next/image
 
 const CartItem = () => {
 
@@ -11,19 +11,22 @@ const CartItem = () => {
   const { cart, addToCart, delQty, clearCart, subTotal, oneMinusQty , oneAddQty } = MyContext()
   
   return (
-     
       Object.keys(cart).map((k) => {
         return(
         <div key={k} className='flex py-5 gap-3 md:gap-5  border-b'>
 
-
           {/* Product Image Start */}
           <div className='shrink-0 aspect-square w-[50px] md:w-[120px]'>
-            <img src={cart[k].img} alt="Boot Image" />
+            <Image 
+              src={cart[k].img} 
+              alt="Boot Image" 
+              width={120}  // Set width to the size you need
+              height={120} // Set height to the size you need
+              className="object-cover" // Optional: Apply any styling you need
+            />
           </div>
           {/* Image End */}
 
-         
           {/* Product Description */}
           <div className='flex flex-col w-full'>
             <div className='flex flex-col md:flex-row justify-between'>
@@ -49,36 +52,27 @@ const CartItem = () => {
             </div>
             {/* Product Subtitle End */}
 
-
             <div className='flex items-center justify-between mt-4'>
               <div className='flex items-center gap-2 md:gap-10 text-sm md:text-md text-black/[0.5]'>
                 <div className='flex items-center gap-1'>
 
                   <div className='font-semibold me-2 '>Size <span className='font-extrabold text-gray-600'>{cart[k].size}</span></div>
                  
-                  <FaCircleMinus onClick={()=>{
-                    oneMinusQty(k)
-                  }}  className='text-md ' />
+                  <FaCircleMinus onClick={()=>{ oneMinusQty(k) }}  className='text-md ' />
 
                   <div className='font-extrabold text-gray-600 mx-1 '>{cart[k].qty}</div>
                   
-                  <FaCirclePlus onClick={()=>{
-                    oneAddQty(k)
-                  }}  className='text-md' />
+                  <FaCirclePlus onClick={()=>{ oneAddQty(k) }}  className='text-md' />
                 </div>
                 
-                <RiDeleteBin6Line onClick={()=>{
-                  delQty(k)
-                }}  className='cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]'></RiDeleteBin6Line> 
+                <RiDeleteBin6Line onClick={()=>{ delQty(k) }}  className='cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]'></RiDeleteBin6Line> 
               </div>
             </div>
 
-
           </div>
 
-
-        </div>) })
-    
+        </div>) 
+      })
   )
 }
 
