@@ -71,15 +71,13 @@ const Category = () => {
                     transition={{ delay: 0, duration: 0.3, stiffness: 50 }}
                     className="bg-white shadow-xl duration-200 hover:scale-105 cursor-pointer hover:shadow-2xl"
                   >
-                    <Link href={`/product/${item._id}`}>
-                      <a>
-                        <Image
-                          src={`/productImages/${item.img || "placeholder"}/thumbnail.webp`}
-                          alt={item.title || "Product Image"}
-                          width={400}
-                          height={400}
-                          onError={(e) => (e.target.src = "/placeholder.jpg")}
-                        />
+                    <Link href={`/product/${item._id}`} >
+                    <Image
+                        src={`/productIamages/${item.img}/thumbnail.webp`}
+                        alt="Product-Image"
+                        width={400}
+                        height={400}
+                      />
                         <div className="p-4 text-black-[0.9]">
                           <h2 className="text-lg font-medium">{item.title}</h2>
                           <div className="flex items-center text-black-[0.8]">
@@ -94,8 +92,7 @@ const Category = () => {
                             </p>
                           </div>
                         </div>
-                      </a>
-                    </Link>
+                      </Link>
                   </motion.div>
                 );
               })}

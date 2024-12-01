@@ -63,7 +63,7 @@ const Checkout = () => {
           </div>
 
           <Link href={"#"}>
-            <button className='w-full my-4 text-lg bg-black text-white border  rounded-full py-4 font-md transition-transform active:scale-95 flex items-center justify-center hover:opacity-75 '>Checkout</button>
+            <button className='w-full my-4 text-lg bg-black text-white border  rounded-full py-4 font-md transition-transform active:scale-95 flex items-center justify-center hover:opacity-75 '>Submit</button>
           </Link>
         </div>
 
