@@ -1,5 +1,5 @@
-import ProductCard from '@/components/ProductCard'
-import Wrapper from '@/components/Wrapper'
+import ProductCard from '../../components/ProductCard'
+import Wrapper from '../../components/Wrapper'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
