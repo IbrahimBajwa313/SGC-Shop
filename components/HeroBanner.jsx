@@ -15,9 +15,9 @@ const HeroBanner = () => {
                         height={500} 
                         layout="responsive" // Maintains responsive aspect ratio
                     />
-                    <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.5] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
+                    {/* <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.5] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
                         Shop now
-                    </div>
+                    </div> */}
                 </div>
                 <div>
                     <Image 
@@ -27,22 +27,23 @@ const HeroBanner = () => {
                         height={500} 
                         layout="responsive"
                     />
-                    <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.9] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
+                    {/* <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.9] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
                         Shop now
-                    </div>
+                    </div> */}
                 </div>
                 <div>
                     <Image 
-                        src="/slide-3.png" 
-                        alt="Slide 3" 
+                        src="/slide-2.png" 
+                        alt="Slide 2" 
                         width={1360} 
                         height={500} 
                         layout="responsive"
                     />
-                    <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.5] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
+                    {/* <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.9] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
                         Shop now
-                    </div>
+                    </div> */}
                 </div>
+                
             </Carousel>
         </div>
     );

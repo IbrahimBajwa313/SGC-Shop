@@ -129,16 +129,21 @@ const Header = (cart) => {
           transition={{ duration: 0.3 }}
           className="flex pt-3 pb-1 items-center justify-between mx-6"
         >
-          {/* Logo of the Store */}
-          <Link href={"/"}>
+          {/* Logo of the Site */}
+        <Link href="/">
+          <div className="flex items-center space-x-4">
             <Image
-              src="/logo.png"
-              alt="Logo"
-              width={90}
-              height={90}
-              className="w-[80px] md:w-[90px] mr-2 mt-2 border border-transparent rounded-md hover:bg-gray-50 hover:shadow-lg px-4 py-2"
+              src="/save-gaza-logo.png"
+              alt="Save Gaza Campaign Logo"
+              className="h-12 w-12"
+              height={48}
+              width={48}
             />
-          </Link>
+            <span className="text-2xl font-bold hover:text-green-500">
+              Save Gaza Campaign
+            </span>
+          </div>
+        </Link>
 
           {/* Navbar Menu items, category sub-menu */}
           <Menu

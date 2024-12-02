@@ -18,8 +18,9 @@ export default function Home() {
       <Wrapper>
         <div className=' text-center max-w-[800px] mt-[50px] md:mt-[80px] mx-auto'>
 
-          <div className='font-bold text-[28px] md:text-[34px]  mb-2 leading-tight '>Discover Your Signature Look</div>
-          <div className='felx text-[20px] mb-4'>Explore our thoughtfully curated collection of shoes that caters to various styles, occasions, and personalities.  </div>
+          <div className='font-bold text-[28px] md:text-[34px]  mb-2 leading-tight '>Stand for Palestine with Every Step</div>
+          <div className='felx text-[20px] mb-4'>
+          Discover our collection of thoughtfully crafted products, where every purchase contributes to the cause of justice, hope, and freedom for Palestine. Together, let’s make a difference! </div>
 
         </div>
 
