@@ -1,7 +1,6 @@
 
 import mongoose from "mongoose";
-// export const connectionStr = "mongodb+srv://ibrahimbajwa1065:ABib381381@cluster0.bathrnt.mongodb.net/dbProduct?retryWrites=true&w=majority";
-export const connectionStr = process.env.MONGODB_CONNECTION_STRINGS;
+ export const connectionStr = process.env.MONGODB_CONNECTION_STRINGS;
 
 const connectDB = handler => async (req, res) => {
   try {

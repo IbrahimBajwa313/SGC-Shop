@@ -1,18 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const ProductSchema = new mongoose.Schema({
-    title: { type: String, recquired: true },
-    slug: { type: String, recquired: true, unique : true },
-    desc: { type: String, recquired: true },
-    img: { type: String, recquired: true },
-    category: { type: String, recquired: true },
-    size: { type: String, recquired: true },
-    color: { type: String, recquired: true },
-    price: { type: Number,  recquired: true },
-    availableQty: { type: Number, recquired: true } 
-    
-}, {timestamps:true})
+const ProductSchema = new mongoose.Schema(
+    {
+      title: { type: String, required: true },
+      desc: { type: String, required: true },
+      imgThumbnail: { type: String, required: true },
+      imgages: {
+        type: [String],
+        required: false,
+        default: [],
+      },
+      category: { type: String, required: true },
+      size: { type: String, required: false },
+      color: { type: String, required: false },
+      price: { type: Number, required: true },
+      availableQty: { type: Number, required: false },
+    },
+    { timestamps: true }
+  );
+  
+ 
+mongoose.models = {};
 
-mongoose.models = {}
-
-export default mongoose.model("product" , ProductSchema)
+const Product = mongoose.models.products || mongoose.model("products", ProductSchema);
+export default Product;

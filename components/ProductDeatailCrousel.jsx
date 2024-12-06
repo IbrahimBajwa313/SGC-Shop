@@ -1,31 +1,46 @@
-import React from 'react'
+import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";  
 import { Carousel } from 'react-responsive-carousel';
 import Wrapper from './Wrapper';
+import Image from 'next/image';
 
-
-export default function ProductDetailCrousel (img) {
-     
-    return (
+export default function ProductDetailCarousel({ imgThumbnail, imgages }) {
+  return (
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
-        <Wrapper>
+      <Wrapper>
         <Carousel
-                infiniteLoop={true}
-                showIndicators={true}
-                showStatus={true}
-                autoPlay={true}
-                thumbWidth={60}
-                
-                className="productCarousel"
-            > 
-                <img src={`/productIamages/${img.img}/thumbnail.webp`} />
-                <img src={`/productIamages/${img.img}/1.webp`} />
-                <img src={`/productIamages/${img.img}/2.webp`} />
-                <img src={`/productIamages/${img.img}/3.webp`} />
-                <img src={`/productIamages/${img.img}/4.webp`} />
-            </Carousel>
-        </Wrapper>
-    </div>
-  )
-}
+          infiniteLoop={true}
+          showIndicators={true}
+          showStatus={true}
+          autoPlay={true}
+          thumbWidth={60}
+          className="productCarousel"
+        >
+          {/* Thumbnail image */}
+          <div>
+            <Image 
+              src={`/productImages/${imgThumbnail}`} 
+              alt="Thumbnail" 
+              width={600} 
+              height={600} 
+              className="rounded-lg"
+            />
+          </div>
 
+          {/* Additional images from imgages array */}
+          {imgages.map((image, index) => (
+            <div key={index}>
+              <Image 
+                src={`/productImages/${image}`} 
+                alt={`Image ${index + 1}`} 
+                width={600} 
+                height={600} 
+                className="rounded-lg"
+              />
+            </div>
+          ))}
+        </Carousel>
+      </Wrapper>
+    </div>
+  );
+}

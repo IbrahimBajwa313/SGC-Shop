@@ -1,5 +1,4 @@
-
-import ProductDetailCrousel from '../../components/ProductDeatailCrousel'
+import ProductDetailCarousel from '../../components/ProductDeatailCrousel'
 import RelatedProducts from '../../components/RelatedProducts'
 import Wrapper from '../../components/Wrapper'
 import React, { useState, useEffect } from 'react'
@@ -72,7 +71,7 @@ export default function ProductDetails() {
                         <Wrapper>
                             <div className=' flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]'>
                                 {/* left col start  */}
-                                <div className='w-full md:w-auto flex-[1.5] max-w-[500px] lg:max-w-full mx-auto lg:mx-0'><ProductDetailCrousel img={key.img} /> </div>
+                                <div className='w-full md:w-auto flex-[1.5] max-w-[500px] lg:max-w-full mx-auto lg:mx-0'><ProductDetailCarousel imgThumbnail={key.imgThumbnail} imgages={key.imgages} /> </div>
                                 {/* left col end  */}
 
                                 {/* Right col start  */}
