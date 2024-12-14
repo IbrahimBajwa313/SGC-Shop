@@ -5,7 +5,7 @@ const ProductSchema = new mongoose.Schema(
       title: { type: String, required: true },
       desc: { type: String, required: true },
       imgThumbnail: { type: String, required: true },
-      imgages: {
+      images: {
         type: [String],
         required: false,
         default: [],
@@ -14,6 +14,7 @@ const ProductSchema = new mongoose.Schema(
       size: { type: String, required: false },
       color: { type: String, required: false },
       price: { type: Number, required: true },
+      originalPrice: { type: Number, required: true },
       availableQty: { type: Number, required: false },
     },
     { timestamps: true }

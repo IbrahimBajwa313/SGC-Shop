@@ -55,14 +55,14 @@ export default function App({ Component, pageProps }) {
 
   }, [])
   // addToCart function to add items into the cart
-  const addToCart = (itemCode, name, qty, price, size, variant,img ,description) => {
+  const addToCart = (itemCode, name, qty, price, variant,imgThumbnail ,description) => {
     let newCart = cart;
     
     if (itemCode in cart) {
       newCart[itemCode].qty = cart[itemCode].qty + qty;
     }
     else {
-      newCart[itemCode] = { name, qty: 1, price, size, variant , img,description };
+      newCart[itemCode] = { name, qty: 1, price,  variant , imgThumbnail,description };
     }
     setCart(newCart);
     saveCart(newCart);

@@ -56,7 +56,7 @@ const ProductCard = ({ slug, query }) => {
                   >
                     <Link href={`/product/${item._id}`}>
                       <Image
-                        src={`/productIamages/${item.img}/thumbnail.webp`}
+                        src={`${item.img}`}
                         alt="Product-Image"
                         width={400}
                         height={400}
