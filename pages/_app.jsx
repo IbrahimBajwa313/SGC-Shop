@@ -1,9 +1,11 @@
+import Sidebar from '../components/Sidebar'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import '../styles/globals.css'
 import Head from 'next/head'
 import { useState, useEffect, createContext, useContext,oneMinusQty } from 'react'
 import Headroom from 'react-headroom'
+import { useRouter } from 'next/router';
 
 export const productInfo = createContext();
 
@@ -14,9 +16,11 @@ export function MyContext() {
 
 // App Function
 export default function App({ Component, pageProps }) {
-
+  const router = useRouter();
+  const isAdminPage = router.pathname.includes('admin');
 
   const [cart, setCart] = useState({})
+  const [showSidebar, setShowSidebar] = useState(false)
 
   // Page will remain same after reload
   useEffect(() => {
@@ -29,7 +33,17 @@ export default function App({ Component, pageProps }) {
       console.error(error)
       localStorage.clear()
     }
-  }, [])
+
+    if(isAdminPage){
+      setShowSidebar(true)
+    }
+    else{
+      setShowSidebar(false)
+    }
+
+    console.log('showsidebar', showSidebar)
+
+  }, [router])
 
   const [subTotal, setSubTotal] = useState(0)
 
@@ -126,11 +140,19 @@ export default function App({ Component, pageProps }) {
         <Header cart={cart}/>
       </Headroom>
 
-      <productInfo.Provider className={"dark"} value={{ cart, addToCart, oneMinusQty, clearCart, subTotal,oneAddQty,delQty }}  {...pageProps} >
+      <div className={`${isAdminPage ? 'flex justify-between':''}`} >
 
-        <Component />
+
+      {showSidebar && (
+        <Sidebar />
+      )}
+
+      <productInfo.Provider className={`dark`} value={{ cart, addToCart, oneMinusQty, clearCart, subTotal,oneAddQty,delQty }}  {...pageProps} >
+
+        <Component  />
 
       </productInfo.Provider>
+      </div>
       {/* <Wrapper> */}
       <Footer />
       {/* </Wrapper> */}

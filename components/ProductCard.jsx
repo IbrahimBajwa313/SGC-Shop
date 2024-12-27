@@ -22,11 +22,18 @@ const ProductCard = ({ slug, query }) => {
         console.error("Error fetching data:", error);
       } finally {
         setIsLoading(false); // Stop the loader after data is fetched
+        // console.log('products',products)
       }
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log('products',products)
+    
+  }, [products])
+  
 
   if (products?.length === 0) {
     return (
