@@ -52,10 +52,7 @@ export default function ProductUpload() {
       images: images // Set the new sizes array
     }));
   };
-
-
   
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProductData((prevData) => ({
@@ -65,11 +62,6 @@ export default function ProductUpload() {
   }; 
 
   const handleFileChange = (e) => {
-    // if (e.target.name === 'imgThumbnail') {
-    //   setImgThumbnail(e.target.files[0]);
-    // } else if (e.target.name === 'imgages') {
-    //   setImgages([...e.target.files]);
-    // }
     setImages((prevImages) => {
         return [...prevImages, e.target.files[0]];
     });
@@ -94,34 +86,49 @@ export default function ProductUpload() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log('selectedSizes',selectedSizes)
-    // console.log('images',images)
-
     
 
     console.log('product', productData)
+    console.log('product', productData.title)
 
     const formData = new FormData();
-    formData.append('title', productData.title);
-    formData.append('desc', productData.desc);
-    formData.append('category', productData.category);
-    formData.append('price', productData.price);
-    formData.append('availableQuantity', productData.availableQuantity);
+    formData.append('title', productData.title || '');
+    formData.append('desc', productData.desc || '');
+    formData.append('category', productData.category || '');
+    formData.append('price', productData.price || 0);
+    formData.append('availableQuantity', String(productData.availableQuantity || 0));
     formData.append('availability', productData.availability);
-    formData.append('discount', productData.discount);
+    formData.append('discount', productData.discount || 0);
 
+    // Append 'sizes' as JSON string (array format)
+    formData.append('sizes', productData.sizes || []);
+
+    // Append 'images' as JSON string (array format)
+    // formData.append('images', productData.images || []);
+    if (productData.images && Array.isArray(productData.images)) {
+      productData.images.forEach((image) => {
+        formData.append('images[]', image);  // 'images[]' is the key that groups them as an array on the backend
+      });
+    }
+    console.log('images',productData.images)
     
 
     const res = await fetch('/api/addProducts', {
       method: 'POST',
       body: formData,
     });
-
+    
     if (res.ok) {
       alert('Product uploaded successfully');
     } else {
-      alert('Failed to upload product');
+      // Log the error details
+      const errorData = await res.json(); // Parse the JSON error response
+      console.error('Upload Error:', errorData); // Log error details in the console
+    
+      // Display a more informative alert
+      alert(`Failed to upload product: ${errorData.error || 'Unknown error occurred'}`);
     }
+    
   };
 
   return (
