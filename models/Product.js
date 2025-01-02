@@ -1,50 +1,51 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   desc: {
     type: String,
-    required: true
+    required: true,
   },
   images: {
-    type: [String],  // Array of image URLs
-    required: true
+    type: [String], // Array of image URLs
+    required: true,
   },
   category: {
     type: String,
-    required: true
+    required: true,
   },
   sizes: {
-    type: [String],  // Array of sizes like ["S", "M", "L"]
-    required: true
+    type: [String], // Array of sizes like ["S", "M", "L"]
+    required: false,
   },
   price: {
-    type: Number,  // Original price of the product
-    required: true
+    type: Number, // Original price of the product
+    required: true,
   },
   availability: {
     type: Boolean,
-    required: true
+    required: true,
   },
   availableQuantity: {
-    type: Number,  
-    required: true
+    type: Number,
+    required: true,
   },
   discount: {
-    type: Number,  // Discount percentage (e.g., 20 for 20% off)
-    default: 0
-  }
+    type: Number, // Discount percentage (e.g., 20 for 20% off)
+    default: 0,
+  },
 });
 
 // Virtual field for discounted price
-productSchema.virtual('discountedPrice').get(function () {
+productSchema.virtual("discountedPrice").get(function () {
   if (this.discount > 0) {
-    return this.price - (this.price * (this.discount / 100));
+    return this.price - this.price * (this.discount / 100);
   }
-  return this.price;  // No discount, return the original price
+  return this.price; // No discount, return the original price
 });
 
-module.exports = mongoose.models.Product || mongoose.model('Product', productSchema);
+module.exports =
+  mongoose.models.Product || mongoose.model("Product", productSchema);
