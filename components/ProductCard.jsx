@@ -15,6 +15,7 @@ const ProductCard = ({ slug, query }) => {
 
         if (result && Array.isArray(result.products)) {
           setProducts(result.products);
+          console.log('prod', products)
         } else {
           console.error("Invalid data structure received:", result);
         }
@@ -61,9 +62,9 @@ const ProductCard = ({ slug, query }) => {
                     transition={{ delay: 0, duration: 0.3, stiffness: 50 }}
                     className="bg-white shadow-xl duration-200 hover:scale-105 cursor-pointer hover:shadow-2xl"
                   >
-                    <Link href={`/product/${item._id}`}>
-                      <Image
-                        src={`${item.img}`}
+                    <Link href={`/product/${item.id}`}>
+                      <img
+                        src={`/uploads/${item.images[0]}`}
                         alt="Product-Image"
                         width={400}
                         height={400}
@@ -75,10 +76,10 @@ const ProductCard = ({ slug, query }) => {
                             {item.price}$
                           </p>
                           <p className="text-base font-medium line-through">
-                            {item.originalPrice}$
+                            {item.price}$
                           </p>
                           <p className="ml-auto text-green-500 font-base">
-                            {discountPercentage}% off
+                            {item.discount}% off
                           </p>
                         </div>
                       </div>

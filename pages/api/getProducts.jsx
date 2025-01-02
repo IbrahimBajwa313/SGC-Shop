@@ -1,40 +1,37 @@
-// pages/api/getProducts.js
-
-import connectDB from "../../middleware/mongoose";
-import Product from "../../models/Product";
+import connectDB from '../../middleware/mongoose';
+import Product from '../../models/Product';
 
 const handler = async (req, res) => {
-  try {
-    const { sortBy } = req.query;
+  if (req.method === 'GET') {
+    try {
+      // Fetch all products
+      const products = await Product.find();
 
-    let products;
+      // Add the discounted price to the response
+      const formattedProducts = products.map(product => ({
+        id: product._id,
+        title: product.title,
+        desc: product.desc,
+        images: product.images,
+        category: product.category,
+        sizes: product.sizes,
+        price: product.price,
+        discountedPrice: product.discount > 0 ? product.price - (product.price * (product.discount / 100)) : product.price,
+        availability: product.availability,
+        availableQuantity: product.availableQuantity,
+        discount: product.discount,
+      }));
 
-    if (sortBy === 'highToLow') {
-      products = await Product.find().sort({ price: -1 });
-    } else if (sortBy === 'lowToHigh') {
-      products = await Product.find().sort({ price: 1 });
-    } else {
-      // Default: no sorting
-      products = await Product.find();
+      console.log('formattedProducts', formattedProducts)
+
+      return res.status(200).json({ success: true, products: formattedProducts });
+    } catch (error) {
+      console.error('Error fetching products:', error.message);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
     }
-
-    res.status(200).json({ products });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+  } else {
+    return res.status(405).json({ success: false, message: 'Method not allowed' });
   }
 };
 
 export default connectDB(handler);
-
-// http://localhost:3000/api/getProducts (No sorting)
-// http://localhost:3000/api/getProducts?sortBy=highToLow (Sort by high-to-low price)
-// http://localhost:3000/api/getProducts?sortBy=lowToHigh (Sort by low-to-high price)
-
-
-
-
-
-
-
-

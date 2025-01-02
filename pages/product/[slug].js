@@ -26,7 +26,7 @@ export default function ProductDetails() {
         const result = await response.json();
 
         // Ensure the response has a "products" property and it's an array
-        if (result && Array.isArray(result.products)) {
+        if (result) {
           setItems(result.products);
         } else {
           console.error("Invalid data structure received:", result);
@@ -66,8 +66,8 @@ export default function ProductDetails() {
     >
       {items.map(
         (product) =>
-          product._id === slug && (
-            <div key={product._id}>
+          product.id === slug && (
+            <div key={product.id}>
               {/* Parse and validate images */}
               <Wrapper>
                 <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
