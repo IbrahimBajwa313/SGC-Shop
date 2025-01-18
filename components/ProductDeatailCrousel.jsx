@@ -1,0 +1,47 @@
+import React from 'react';
+import "react-responsive-carousel/lib/styles/carousel.min.css";  
+import { Carousel } from 'react-responsive-carousel';
+import Wrapper from './Wrapper';
+import Image from 'next/image';
+
+export default function ProductDetailCarousel({ imgThumbnail, imgages }) {
+  return (
+    <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
+      <Wrapper>
+        <Carousel
+          infiniteLoop={true}
+          showIndicators={true}
+          showStatus={true}
+          autoPlay={true}
+          thumbWidth={60}
+          className="productCarousel"
+        >
+          {/* Thumbnail image */}
+          <div>
+            <Image 
+              src={imgThumbnail} 
+              alt="Thumbnail" 
+              width={600} 
+              height={600} 
+              className="rounded-lg"
+            />
+          </div>
+
+          {/* Additional images from imgages array */}
+          {imgages.map((image, index) => (
+            <div key={index}>
+              <Image 
+                src={image .replace("D:\\web development-2\\SGC-Shop-main\\public", "")
+                  .replace(/\\/g, "/")} 
+                alt={`Image ${index + 1}`} 
+                width={600} 
+                height={600} 
+                className="rounded-lg"
+              />
+            </div>
+          ))}
+        </Carousel>
+      </Wrapper>
+    </div>
+  );
+}
