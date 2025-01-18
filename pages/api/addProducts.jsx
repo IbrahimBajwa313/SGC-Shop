@@ -49,18 +49,28 @@ const handler = async (req, res) => {
         if (files.imgThumbnail) {
           const imgThumbnailFile = Array.isArray(files.imgThumbnail) ? files.imgThumbnail[0] : files.imgThumbnail;
           imgThumbnailPath = path.join(productFolder, imgThumbnailFile.originalFilename);
+        
+          // Rename the file to its new location
           await fs.rename(imgThumbnailFile.filepath, imgThumbnailPath);
+        
+          // Store the path starting from the 'public' folder
+          imgThumbnailPath = imgThumbnailPath.replace(path.join(process.cwd(), "public"), "");
         }
-
+        
         // Handle Additional Images
         if (files.imgages) {
           const images = Array.isArray(files.imgages) ? files.imgages : [files.imgages];
           for (const file of images) {
             const filePath = path.join(productFolder, file.originalFilename);
+        
+            // Rename the file to its new location
             await fs.rename(file.filepath, filePath);
-            imagesPaths.push(filePath.replace("D:\web development-2\SGC-Shop-main\public", ""));
+        
+            // Add the relative path starting from the 'public' folder
+            imagesPaths.push(filePath.replace(path.join(process.cwd(), "public"), "").replace(/\\/g, "/"));
           }
         }
+        
         
 const strTitles=title[0];
 const strDescription=desc[0];
@@ -68,9 +78,7 @@ const strCategory=category[0];
         const product = new Product({
           title:strTitles,
          desc:strDescription,
-         imgThumbnail:imgThumbnailPath
-         .replace("D:\\web development-2\\SGC-Shop-main\\public", "")
-         .replace(/\\/g, "/"),
+         imgThumbnail:imgThumbnailPath.replace(/\\/g, "/"),
           imgages: imagesPaths ,
           category:strCategory,
           size: size[0].split(','), // Convert sizes to array
