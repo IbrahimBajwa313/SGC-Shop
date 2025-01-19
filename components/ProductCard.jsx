@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Loader from "./loader";
 
 const ProductCard = ({ slug, query }) => {
   const [products, setProducts] = useState([]);
@@ -10,11 +11,13 @@ const ProductCard = ({ slug, query }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true)
         const response = await fetch("/api/getProducts");
         const result = await response.json();
 
         if (result && Array.isArray(result.products)) {
           setProducts(result.products);
+          setIsLoading(false)
         } else {
           console.error("Invalid data structure received:", result);
         }
@@ -28,17 +31,14 @@ const ProductCard = ({ slug, query }) => {
     fetchData();
   }, []);
 
-  if (products?.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-      </div>
-    );
-  }
+
+  
   
   return (
      
         <>
+        {isLoading&&<Loader></Loader>}
+        
           {products?.length > 0 ? (
             // <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               products.map((item) => {
@@ -50,9 +50,9 @@ const ProductCard = ({ slug, query }) => {
                 return (
                   <motion.div
                     key={item._id}
-                    initial={{ opacity: 0, scale: 1, y: -50 }}
+                    initial={{ opacity: 0, scale: 1 }}
                     animate={{ y: 0, opacity: 1, scale: 1 }}
-                    transition={{ delay: 0, duration: 0.3, stiffness: 50 }}
+                    transition={{ delay: 0, duration: 0.2 }}
                     className="bg-white shadow-xl duration-200 hover:scale-105 cursor-pointer hover:shadow-2xl"
                   >
                     <Link href={`/product/${item._id}`}>
@@ -81,9 +81,10 @@ const ProductCard = ({ slug, query }) => {
                 );
               })
              
-          ) : (
-            <p className="text-center text-gray-600">No products found.</p>
-          )}
+          ) :!isLoading? (
+           <p className="text-center text-gray-600">No products found.</p>
+          ):null
+          }
         </> 
   );
 };

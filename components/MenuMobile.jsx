@@ -14,8 +14,7 @@ const data = [
     { id: 2, name: 'Sort', subSortMenu: true },     
     { id: 3, name: "About", url: "/about" },
     { id: 4, name: "Categories", subMenu: true },
-    { id: 5, name: "Contact", url: "/contact" },
-    { id: 6, name: "Login", url: "/login" },
+    { id: 5, name: "Login", url: "/login" },
 ];
 
 const subMenuData = [

@@ -7,26 +7,37 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image' // Import Image from next/image
 import { useEffect } from 'react'
+import Loader from '../../components/loader'
 
 const Sort = () => {
     const [Product, setProduct] = useState([])
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false);
     const { slug } = router.query
-    const searchparams = useSearchParams()
+    const [message, setMessage] = useState(false);
 
+    useEffect(() => {
+      const timer = setTimeout(() => setMessage(true), 2000);
+      return () => clearTimeout(timer);
+    }, []);
+ 
     const handleSearch = async () => {
         // logic to handle search
 
         if (slug == 'Price high to low') {
+            setIsLoading(true)
             const response = await fetch('/api/getProducts?sortBy=highToLow');
             const result = await response.json();
             setProduct(result.products)
             console.log(result)
+            setIsLoading(false)
         }
         if (slug == 'Price low to high') {
+            setIsLoading(true)
             const response = await fetch('/api/getProducts?sortBy=lowToHigh');
             const result = await response.json();
             setProduct(result.products)
+            setIsLoading(false)
         }
     };
     useEffect(() => {
@@ -44,11 +55,13 @@ const Sort = () => {
                 </div>
 
                 {/* Product Grid */}
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
+{        isLoading ? (
+        <Loader></Loader>
+      ) :       ( <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
                     {Product?.map((item) => {
                         const discountPercentage = Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100);
 
-                        return (
+                         return (
                             <motion.div
                                 key={item._id}
                                 initial={{ opacity: 0, scale: 1, y: -50 }}
@@ -76,7 +89,7 @@ const Sort = () => {
                             </motion.div>
                         );
                     })}
-                </div>
+                </div>)}
             </Wrapper>
         </div>
     )

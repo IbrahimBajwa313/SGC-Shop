@@ -3,19 +3,11 @@ import Wrapper from '../components/Wrapper'
 import Link from 'next/link'
 import React from 'react'
 import { useEffect, useState } from 'react'
-
+import { MyContext } from './_app'
 const Checkout = () => {
-  const [subtotal, setSubtotal] = useState(0);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") { // Check if it's running on the client side
-      const subTotalValue = localStorage.getItem("SubTotal");
-      if (subTotalValue) {
-        setSubtotal(subTotalValue);
-      }
-    }
-  }, []);
-
+  const {  subTotal } = MyContext()
+ 
+ 
   return (
     <Wrapper>
 
@@ -57,9 +49,9 @@ const Checkout = () => {
           <h2 className='font-semibold mb-4 text-xl'>In Your Bag </h2>
           <CartItem/>
           {/* <div className='flex justify-between'> */}
-
-          <div className='uppercase shadow-lg  p-4 rounded-lg text-md md:text-lg font-medium text-black'>
-            Subtotal : {subtotal}/. Rs
+      
+         <div className='uppercase shadow-lg  p-4 rounded-lg text-md md:text-lg font-medium text-black'>
+            Subtotal : {subTotal}/. Rs
           </div>
 
           <Link href={"#"}>

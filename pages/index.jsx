@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard";
 import Wrapper from "../components/Wrapper";
 import { useInView } from 'react-hook-inview'
 import { motion } from "framer-motion";
+import Loader from "../components/loader";
 
 export default function Home() {
 
@@ -27,6 +28,7 @@ export default function Home() {
         {/* Product Grid   */}
         <div ref={ref} className="mb-52">
         {<div  className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
+          
           <ProductCard />
         </div>}
 

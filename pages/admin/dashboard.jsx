@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react';
 import Link from "next/link";
 import React from 'react';
 import Layout from '../../components/Layout';
+import Loader from '../../components/loader';
+
 
 const Dashboard = () => {
   const [items, setItems] = useState([]);
   const [trigger, setTrigger] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleDel = async (id) => {
     try {
       console.log('id is', id);
+      
       const response = await fetch(`/api/delProd?id=${id}`, {
         method: 'DELETE', // Set method to DELETE
         headers: {
@@ -21,6 +25,7 @@ const Dashboard = () => {
         setTrigger((prev) => {
           return !prev; // Toggle the state value
         });
+     
       } else {
         console.error("Failed to delete product:", response.statusText);
       }
@@ -32,12 +37,14 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true)
         const response = await fetch("/api/getProducts");
         const result = await response.json();
 
         // Ensure the response has a "products" property and it's an array
         if (result) {
           setItems(result.products);
+          setIsLoading(false)
           console.log('item', result.products);
         } else {
           console.error("Invalid data structure received:", result);
@@ -58,8 +65,10 @@ const Dashboard = () => {
       {/* Wrapper for Products list and Add button */}
    
         
-      <div className="w-full p-10 space-y-5">
-        {items.map((item) => (
+  {isLoading ? (
+        <Loader></Loader>
+      ) : ( <div className="w-full p-10 space-y-5">
+        {items?.map((item) => (
           <div key={item._id} className="flex justify-center items-center relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -119,7 +128,9 @@ const Dashboard = () => {
             </table>
           </div>
         ))}
-      </div>
+      </div>)
+}
+
     </div>
     </Layout>);
 };

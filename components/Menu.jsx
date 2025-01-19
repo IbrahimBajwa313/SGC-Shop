@@ -9,8 +9,7 @@ const data = [
     { id: 1, name: 'Home', url: '/' },
     { id: 2, name: 'Sort', subSortMenu: true },
     { id: 3, name: 'Categories', subMenu: true },
-    { id: 4, name: 'Contact', url: '/contact' },
-    { id: 5, name: 'Login', url: '/login' },
+    { id: 4, name: 'Login', url: '/login' },
 ];
 
 const subMenuData = [
@@ -54,7 +53,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, showSortMenu, setShowSortMenu,formS
                     <React.Fragment key={item.id}>
                         {item?.subMenu && (
                             <li
-                                className='cursor-pointer z-40 gap-2 flex text-center relative border border-transparent rounded-md hover:shaodow-lg px-4 py-2'
+                                className='cursor-pointer z-40 gap-2 flex text-center relative border border-transparent rounded-md  px-4 py-2'
                                 onMouseEnter={() => {
                                     setShowCatMenu(true);
                                     setShowSortMenu(false); // Close sort menu
@@ -98,7 +97,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, showSortMenu, setShowSortMenu,formS
 
                                             return (
                                                
-                                                    <li key={subSortMenu} onClick={()=>{window.location.replace(`/Sortby/${subSortMenu.name}`)}} className='cursor-pointer flex justify-between items-center   px-3 hover:bg-black/[0.03] rounded-md'>
+                                                    <li key={subSortMenu} onClick={()=>{window.location.replace(`/Sortby/${subSortMenu.name}`)}} className='cursor-pointer flex justify-between items-center   px-3 -black/[0.03] rounded-md'>
                                                         {subSortMenu.name}
                                                     </li>
                                                 
@@ -109,7 +108,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, showSortMenu, setShowSortMenu,formS
                             </li>
                         )}
                         {!item?.subMenu && !item?.subSortMenu && (
-                            <li className='cursor-pointer p9 border border-transparent rounded-md hover:shadow-lg hover:bg-gray-200 px-4 py-2'>
+                            <li className='cursor-pointer p9 border border-transparent rounded-md hover:font-semibold px-4 py-2'>
                                 <Link href={item?.url}>{item.name}</Link>
                             </li>
                         )}

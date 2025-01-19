@@ -5,16 +5,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Loader from "../../components/loader";
 
 const Category = () => {
   const [products, setProducts] = useState([]); // Initialize as an empty array
-  const [isLoading, setIsLoading] = useState(true); // State for loader
+  const [isLoading, setIsLoading] = useState(false); // State for loader
   const router = useRouter();
   const { slug } = router.query; // Destructure 'slug' from router.query
+  const [message, setMessage] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMessage(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleSearch = async () => {
       try {
+        setIsLoading(true)
         const response = await fetch("/api/getProducts");
         const result = await response.json();
 
@@ -40,7 +48,7 @@ const Category = () => {
 
   return (
     <Wrapper>
-      <div className="w-full md:py-10">
+      <div className="w-full md:py-8">
         <div className="text-center mx-w-[800px] mx-auto md:pt-0">
           {slug && (
             <div className="font-sans text-[28px] md:text-[34px] mb-10 leading-tight">
@@ -51,9 +59,7 @@ const Category = () => {
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-        </div>
+        <Loader></Loader>
       ) : (
         <>
           {products?.length > 0 ? (
@@ -97,9 +103,9 @@ const Category = () => {
                 );
               })}
             </div>
-          ) : (
+          ) :!isLoading&&message? (
             <p className="text-center text-gray-600">No products found.</p>
-          )}
+          ):null}
         </>
       )}
     </Wrapper>

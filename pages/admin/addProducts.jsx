@@ -148,7 +148,7 @@ console.log('product is',category)
 
         <div className="mb-4">
           <label htmlFor="size" className="block text-gray-600 mb-2">
-            Sizes (comma separated)
+          Size <p className='text-xs'>(Specify sizes (comma-separated) or leave blank if not applicable.)</p>
           </label>
           <input
             type="text"
