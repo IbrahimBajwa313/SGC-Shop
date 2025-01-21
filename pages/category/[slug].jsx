@@ -79,7 +79,7 @@ const Category = () => {
                   >
                     <Link href={`/product/${item._id}`} >
                     <Image
-                        src={item.imgThumbnail}
+                         src={`${process.env.NEXT_PUBLIC_DOMAIN}${item.imgThumbnail}`}
                         alt="Product-Image"
                         width={400}
                         height={400}

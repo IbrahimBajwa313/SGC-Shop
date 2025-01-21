@@ -12,13 +12,14 @@ const CartItem = () => {
   
   return (
       Object.keys(cart).map((k) => {
+        console.log(`${process.env.NEXT_PUBLIC_DOMAIN}/${cart[k].img}`)
         return(
         <div key={k} className='flex py-5 gap-3 md:gap-5  border-b'>
 
           {/* Product Image Start */}
           <div className='shrink-0 aspect-square w-[50px] md:w-[120px]'>
             <Image 
-              src={cart[k].img} 
+              src={`${process.env.NEXT_PUBLIC_DOMAIN}/${cart[k].img}`} 
               alt="Boot Image" 
               width={120}  // Set width to the size you need
               height={120} // Set height to the size you need

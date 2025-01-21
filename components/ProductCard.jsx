@@ -42,7 +42,7 @@ const ProductCard = ({ slug, query }) => {
           {products?.length > 0 ? (
             // <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               products.map((item) => {
-                console.log('item is',item.imgages)
+                console.log('domain is',process.env.NEXT_PUBLIC_DOMAIN+item.imgThumbnail)
                 const discountPercentage = Math.round(
                   ((item.originalPrice - item.price) / item.originalPrice) * 100
                 );
@@ -57,7 +57,7 @@ const ProductCard = ({ slug, query }) => {
                   >
                     <Link href={`/product/${item._id}`}>
                       <Image
-                        src={item.imgThumbnail}
+                        src={`${process.env.NEXT_PUBLIC_DOMAIN}/${item.imgThumbnail}`}
                         alt="Product-Image"
                         width={400}
                         height={400}

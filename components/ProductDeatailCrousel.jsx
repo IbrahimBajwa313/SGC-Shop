@@ -5,6 +5,7 @@ import Wrapper from './Wrapper';
 import Image from 'next/image';
 
 export default function ProductDetailCarousel({ imgThumbnail, imgages }) {
+  console.log('imgages',imgages )
   return (
     <div className="text-white text-[20px] w-full max-w-[1360px] mx-auto sticky top-[50px]">
       <Wrapper>
@@ -19,7 +20,7 @@ export default function ProductDetailCarousel({ imgThumbnail, imgages }) {
           {/* Thumbnail image */}
           <div>
             <Image 
-              src={imgThumbnail} 
+              src={`${process.env.NEXT_PUBLIC_DOMAIN}/${imgThumbnail}`}
               alt="Thumbnail" 
               width={600} 
               height={600} 
@@ -31,13 +32,12 @@ export default function ProductDetailCarousel({ imgThumbnail, imgages }) {
           {imgages.map((image, index) => (
             <div key={index}>
               <Image 
-                src={image .replace("D:\\web development-2\\SGC-Shop-main\\public", "")
-                  .replace(/\\/g, "/")} 
-                alt={`Image ${index + 1}`} 
-                width={600} 
-                height={600} 
-                className="rounded-lg"
-              />
+  src={`${process.env.NEXT_PUBLIC_DOMAIN}/${image}`} 
+  alt={`Image ${index + 1}`} 
+  width={600} 
+  height={600} 
+  className="rounded-lg"
+/>
             </div>
           ))}
         </Carousel>

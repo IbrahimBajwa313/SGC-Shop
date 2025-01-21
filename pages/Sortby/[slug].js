@@ -71,7 +71,7 @@ const Sort = () => {
                             >
                                  <Link href={`/product/${item._id}`}>
                                     <Image
-                                        src={item.imgThumbnail}
+                                        src={`${process.env.NEXT_PUBLIC_DOMAIN}${item.imgThumbnail}`}
                                         alt={item.title} // Updated alt text
                                         width={400} // Adjust width as needed
                                         height={400} // Adjust height as needed

@@ -15,31 +15,32 @@ const handler = async (req, res) => {
     try {
       await connectDB();
 
-     
-      
       const form = formidable({
-        uploadDir: './public/productImages', // Ensure the directory exists
+        uploadDir: './uploads/productImages', // Ensure the directory exists
         keepExtensions: true,
         multiples: true, // Allow multiple files
-    });
+      });
 
-    try {
+      try {
         const { fields, files } = await new Promise((resolve, reject) => {
-            form.parse(req, (err, fields, files) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                resolve({ fields, files });
-            });
+          form.parse(req, (err, fields, files) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve({ fields, files });
+          });
         });
+
         const { title, desc, category, size, price, availableQty } = fields;
-        
-            if (!title || !desc || !category || !size || !price || !availableQty) {
+
+        if (!title || !desc || !category || !size || !price || !availableQty) {
           return res.status(400).json({ error: 'All fields are required' });
         }
 
-        const productFolder = path.join(form.uploadDir, title.join('_'));
+        // Replace spaces in title with underscores
+        const sanitizedTitle = title[0].replace(/\s+/g, '_');
+        const productFolder = path.join(form.uploadDir, sanitizedTitle);
         await fs.mkdir(productFolder, { recursive: true });
 
         let imgThumbnailPath = '';
@@ -48,39 +49,37 @@ const handler = async (req, res) => {
         // Handle Thumbnail
         if (files.imgThumbnail) {
           const imgThumbnailFile = Array.isArray(files.imgThumbnail) ? files.imgThumbnail[0] : files.imgThumbnail;
-          imgThumbnailPath = path.join(productFolder, imgThumbnailFile.originalFilename);
-        
+          const sanitizedThumbnailName = imgThumbnailFile.originalFilename.replace(/\s+/g, '_');
+          imgThumbnailPath = path.join(productFolder, sanitizedThumbnailName);
+
           // Rename the file to its new location
           await fs.rename(imgThumbnailFile.filepath, imgThumbnailPath);
-        
-          // Store the path starting from the 'public' folder
-          imgThumbnailPath = imgThumbnailPath.replace(path.join(process.cwd(), "public"), "");
+
+          // Add `/productImages` prefix
+          imgThumbnailPath = `${sanitizedTitle}/${sanitizedThumbnailName}`;
         }
-        
+
         // Handle Additional Images
         if (files.imgages) {
           const images = Array.isArray(files.imgages) ? files.imgages : [files.imgages];
           for (const file of images) {
-            const filePath = path.join(productFolder, file.originalFilename);
-        
+            const sanitizedFileName = file.originalFilename.replace(/\s+/g, '_');
+            const filePath = path.join(productFolder, sanitizedFileName);
+
             // Rename the file to its new location
             await fs.rename(file.filepath, filePath);
-        
-            // Add the relative path starting from the 'public' folder
-            imagesPaths.push(filePath.replace(path.join(process.cwd(), "public"), "").replace(/\\/g, "/"));
+
+            // Add `/productImages` prefix
+            imagesPaths.push(`${sanitizedTitle}/${sanitizedFileName}`);
           }
         }
-        
-        
-const strTitles=title[0];
-const strDescription=desc[0];
-const strCategory=category[0];
+
         const product = new Product({
-          title:strTitles,
-         desc:strDescription,
-         imgThumbnail:imgThumbnailPath.replace(/\\/g, "/"),
-          imgages: imagesPaths ,
-          category:strCategory,
+          title: title[0],
+          desc: desc[0],
+          imgThumbnail: imgThumbnailPath,
+          imgages: imagesPaths,
+          category: category[0],
           size: size[0].split(','), // Convert sizes to array
           price: parseFloat(price),
           availableQty: parseInt(availableQty, 10),
@@ -89,18 +88,10 @@ const strCategory=category[0];
         await product.save();
         console.log('Product saved:', product);
         res.status(200).json({ message: 'Product uploaded successfully', product });
-      
-
-      
-       
-    } catch (error) {
+      } catch (error) {
         console.error('Error parsing form:', error);
         res.status(500).json({ message: 'Error processing form data' });
-    }
-  
-
-      //   // Validate required fields
-    
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
