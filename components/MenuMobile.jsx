@@ -14,8 +14,7 @@ const data = [
     { id: 2, name: 'Sort', subSortMenu: true },     
     { id: 3, name: "About", url: "/about" },
     { id: 4, name: "Categories", subMenu: true },
-    { id: 5, name: "Contact", url: "/contact" },
-    { id: 6, name: "Login", url: "/login" },
+    { id: 5, name: "Login", url: "/login" },
 ];
 
 const subMenuData = [
@@ -35,10 +34,27 @@ const subSortData = [
         
 const MenuMobile = ({ showCatMenu, setShowCatMenu, setMobileMenu ,showSortMenu,setShowSortMenu}) => {
 const [isClient, setisClient] = useState(false)
+const [category, setCategory] = useState([]);
 
 useEffect(() => {
     setisClient(true) 
 }, [])
+
+useEffect(() => {
+    const fetchProducts = async () => {
+        try {
+            const response = await fetch('/api/getCategory');
+            const data = await response.json();
+            setCategory(data.categories);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };
+
+    fetchProducts();
+}, []);
+console.log('product is',category)
+
 
     return (
         <div >
@@ -98,7 +114,7 @@ useEffect(() => {
                                         
                                         {showCatMenu && (
                                             <motion.ul animate={{y:0}} initial={{y:-30}} transition={{duration:.4}} className='bg-black/[0.05] -mx-5 mt-4 -mb-4 '>
-                                                {subMenuData.map((subMenu) => {
+                                                {category.map((subMenu) => {
                                                     return (
                                                         <Link
                                                             key={subMenu.id} href={"/"}

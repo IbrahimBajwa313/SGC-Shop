@@ -13,18 +13,18 @@ import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import { RxCross1 } from "react-icons/rx";
 
-const Header = (cart) => {
+const Header = (props) => {
   const [Number, setNumber] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [search, setsearch] = useState('Search...');
   const [showsearch, setshowsearch] = useState(false);
   const [repetation, setrepetation] = useState(0);
-
+console.log('cart is',props)
   useEffect(() => {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('cart')) {
       setNumber(Object.keys(JSON.parse(localStorage.getItem('cart'))).length);
     }
-  }, [cart]);
+  }, [props]);
 
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
@@ -56,7 +56,8 @@ const Header = (cart) => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-pink-100 to-white  w-screen">
+    <div className="bg-white w-screen">
+    
       {isClient && showsearch && (
         <motion.div
           initial={{ y: -30 }}
@@ -132,15 +133,15 @@ const Header = (cart) => {
           {/* Logo of the Site */}
         <Link href="/">
           <div className="flex items-center space-x-4">
-            {/* <Image
+            <Image
               src="/save-gaza-logo.png"
               alt="Save Gaza Campaign Logo"
               className="h-12 w-12"
               height={48}
               width={48}
-            /> */}
+            />
             <span className="text-2xl font-bold hover:text-green-500">
-              Furniture Mart
+              Save Gaza Campaign
             </span>
           </div>
         </Link>
@@ -151,6 +152,7 @@ const Header = (cart) => {
             setShowCatMenu={setShowCatMenu}
             showSortMenu={showSortMenu}
             setShowSortMenu={setShowSortMenu}
+            formSubmit={props.formSubmit}
           />
 
           {mobileMenu && (
@@ -199,11 +201,6 @@ const Header = (cart) => {
           </div>
         </motion.div>
       )}
-
-<div>
- 
-
-</div>
     </div>
   );
 };

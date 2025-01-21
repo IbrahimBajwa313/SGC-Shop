@@ -6,30 +6,44 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image' // Import Image from next/image
+import { useEffect } from 'react'
+import Loader from '../../components/loader'
 
 const Sort = () => {
     const [Product, setProduct] = useState([])
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false);
     const { slug } = router.query
-    const searchparams = useSearchParams()
+    const [message, setMessage] = useState(false);
 
+    useEffect(() => {
+      const timer = setTimeout(() => setMessage(true), 2000);
+      return () => clearTimeout(timer);
+    }, []);
+ 
     const handleSearch = async () => {
         // logic to handle search
 
         if (slug == 'Price high to low') {
+            setIsLoading(true)
             const response = await fetch('/api/getProducts?sortBy=highToLow');
             const result = await response.json();
             setProduct(result.products)
             console.log(result)
+            setIsLoading(false)
         }
         if (slug == 'Price low to high') {
+            setIsLoading(true)
             const response = await fetch('/api/getProducts?sortBy=lowToHigh');
             const result = await response.json();
             setProduct(result.products)
+            setIsLoading(false)
         }
     };
-
-    handleSearch()
+    useEffect(() => {
+        handleSearch()
+      }, [slug]);
+    
 
     return (
         <div className='w-full md:py-10 min-h-screen'>
@@ -41,11 +55,13 @@ const Sort = () => {
                 </div>
 
                 {/* Product Grid */}
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
+{        isLoading ? (
+        <Loader></Loader>
+      ) :       ( <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 md:px-0'>
                     {Product?.map((item) => {
                         const discountPercentage = Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100);
 
-                        return (
+                         return (
                             <motion.div
                                 key={item._id}
                                 initial={{ opacity: 0, scale: 1, y: -50 }}
@@ -53,12 +69,12 @@ const Sort = () => {
                                 transition={{ delay: 0, duration: 0.3, stiffness: 50 }}
                                 className='bg-white shadow-xl duration-200 hover:scale-105 cursor-pointer hover:shadow-2xl'
                             >
-                                <Link href={`/product/${item._id}`}>
+                                 <Link href={`/product/${item._id}`}>
                                     <Image
-                                        src={`/productImages/${item.img}/thumbnail.webp`}
+                                        src={`${process.env.NEXT_PUBLIC_DOMAIN}${item.imgThumbnail}`}
                                         alt={item.title} // Updated alt text
-                                        width={300} // Adjust width as needed
-                                        height={300} // Adjust height as needed
+                                        width={400} // Adjust width as needed
+                                        height={400} // Adjust height as needed
                                         className='object-cover object-center'
                                     />
                                     <div className='p-4 text-black-[0.9]'>
@@ -73,7 +89,7 @@ const Sort = () => {
                             </motion.div>
                         );
                     })}
-                </div>
+                </div>)}
             </Wrapper>
         </div>
     )

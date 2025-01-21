@@ -1,22 +1,21 @@
-
 import mongoose from "mongoose";
-export const connectionSrt = "mongodb+srv://ibrahimbajwa1065:ABib381381@cluster0.bathrnt.mongodb.net/dbProduct?retryWrites=true&w=majority"
-const connectDB = handler => async (req, res) => {
+
+export const connectionStr = "mongodb+srv://ibrahimbajwa1065:ABib381381@cluster0.bathrnt.mongodb.net/dbProduct?retryWrites=true&w=majority";
+
+const connectDB = (handler) => async (req, res) => {
+  // Check if already connected
   if (mongoose.connections[0].readyState) {
-    return handler(req, res)
+    return handler(req, res);
   }
-  await mongoose.connect(connectionSrt, {
+
+  // Establish new connection if not connected
+  await mongoose.connect(connectionStr, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-  )
-  return handler(req, res)
-}
+    useUnifiedTopology: true,
+    writeConcern: { w: 'majority' }  // Ensure correct write concern
+  });
+
+  return handler(req, res);
+};
 
 export default connectDB;
-
-
-
-
-
-

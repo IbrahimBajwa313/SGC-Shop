@@ -12,16 +12,15 @@ const CartItem = () => {
   
   return (
       Object.keys(cart).map((k) => {
-
-        {console.log("sasasas",cart[k])}
+        console.log(`${process.env.NEXT_PUBLIC_DOMAIN}/${cart[k].img}`)
         return(
         <div key={k} className='flex py-5 gap-3 md:gap-5  border-b'>
 
           {/* Product Image Start */}
           <div className='shrink-0 aspect-square w-[50px] md:w-[120px]'>
             <Image 
-              src={cart[k].imgThumbnail || "/productImages/palestine-black-keffiyeh/thumbnail.jpg"} 
-              alt="Product Image" 
+              src={`${process.env.NEXT_PUBLIC_DOMAIN}/${cart[k].img}`} 
+              alt="Boot Image" 
               width={120}  // Set width to the size you need
               height={120} // Set height to the size you need
               className="object-cover" // Optional: Apply any styling you need
@@ -42,21 +41,23 @@ const CartItem = () => {
 
               {/* Product Price Start */}
               <div className='text-sm md:text-md font-bold text-black/[0.5] mt-2 '>
-                Price : {cart[k].price}/. Rs
+                Price : {cart[k].price}/. $
               </div>
               {/* Product Price End */}
 
             </div>
             {/* Product Subtitle Start */}
-            {/* <div className='text-sm md:text-md font-medium block text-black/[0.5] '> */}
-              {/* Men&apos;s Golf Shoes */}
+            <div className='text-sm md:text-md font-medium block text-black/[0.5] '>
+              Men&apos;s Golf Shoes
               {/* {cart[k].subTitle} */}
-            {/* </div> */}
+            </div>
             {/* Product Subtitle End */}
 
             <div className='flex items-center justify-between mt-4'>
               <div className='flex items-center gap-2 md:gap-10 text-sm md:text-md text-black/[0.5]'>
                 <div className='flex items-center gap-1'>
+
+                  <div className='font-semibold me-2 '>Size <span className='font-extrabold text-gray-600'>{cart[k].size}</span></div>
                  
                   <FaCircleMinus onClick={()=>{ oneMinusQty(k) }}  className='text-md ' />
 

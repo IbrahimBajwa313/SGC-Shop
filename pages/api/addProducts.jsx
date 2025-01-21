@@ -1,99 +1,104 @@
-import fs from "fs";
-import path from "path";
-import formidable from "formidable";
 import connectDB from '../../middleware/mongoose';
-import Product from '../../models/Product';import multer from 'multer';
+import Product from '../../models/Product';
+import formidable from 'formidable';
+import fs from 'fs/promises';
+import path from 'path';
 
 export const config = {
   api: {
-    bodyParser: false, // Disable default body parsing
+    bodyParser: false, // Disable body parsing to use formidable
   },
 };
 
 const handler = async (req, res) => {
-  if (req.method === "POST") {
-    const uploadDir = path.join(process.cwd(), "public/uploads");
+  if (req.method === 'POST') {
+    try {
+      await connectDB();
 
-    // Ensure the upload directory exists
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
-    const form = formidable({
-      uploadDir,
-      keepExtensions: true,
-      maxFileSize: 100 * 1024 * 1024, // 100MB limit
-      filename: (name, ext, part) => `${Date.now()}_${part.originalFilename}`,
-    });
-
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        console.error("Error parsing form data:", err);
-        return res.status(500).json({ success: false, message: "Error parsing form data" });
-      }
-
-      // console.log('files', files)
-      // console.log('fields', fields.images[0].name)
-
-      // const { title, desc, category, price, availableQuantity, availability, discount, sizes  } = fields
-
-      const title = Array.isArray(fields.title) ? fields.title[0] : fields.title;
-      const desc = Array.isArray(fields.desc) ? fields.desc[0] : fields.desc;
-      const category = Array.isArray(fields.category) ? fields.category[0] : fields.category;
-      const price = Array.isArray(fields.price) ? fields.price[0] : fields.price;
-      const availableQuantity = Array.isArray(fields.availableQuantity) ? fields.availableQuantity[0] : fields.availableQuantity;
-      const availability = Array.isArray(fields.availability) ? fields.availability[0] : fields.availability;
-      const discount = Array.isArray(fields.discount) ? fields.discount[0] : fields.discount;
-      const sizes = Array.isArray(fields.sizes) ? fields.sizes[0] : fields.sizes;
-
-      if (
-              !title ||
-              !desc ||
-              !category ||
-              !price ||
-              !availableQuantity ||
-              !availability ||
-              !sizes ||
-              !files
-            ) {
-              return res.status(400).json({ error: 'Missing required fields' });
-            }
-
-      // Ensure the images array is being received
-      const imgs = files['images[]'] || [] // Multiple images
-      const imagePaths = [];
-      // console.log('imgs', imgs[0].newFilename)
-
-      imgs.forEach((image) => {
-            const newFilename = image.newFilename;
-            imagePaths.push(newFilename); // Save only the filename, not the full path
-          });
-console.log('imagePaths',imagePaths)
+      const form = formidable({
+        uploadDir: './uploads/productImages', // Ensure the directory exists
+        keepExtensions: true,
+        multiples: true, // Allow multiple files
+      });
 
       try {
-        const newProduct = new Product({
-                  title,
-                  desc,
-                  category,
-                  price,
-                  availableQuantity,
-                  availability: availability,  // Convert availability to boolean
-                  discount: discount, // Default discount to 0
-                  sizes: sizes, // Parse sizes if they are in JSON format
-                  images: imagePaths, // Store the array of image paths
-                });
+        const { fields, files } = await new Promise((resolve, reject) => {
+          form.parse(req, (err, fields, files) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve({ fields, files });
+          });
+        });
 
-        await newProduct.save();
+        const { title, desc, category, size, price, availableQty } = fields;
 
-        return res.status(201).json({ success: true, message: "product added successfully" });
+        if (!title || !desc || !category || !size || !price || !availableQty) {
+          return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        // Replace spaces in title with underscores
+        const sanitizedTitle = title[0].replace(/\s+/g, '_');
+        const productFolder = path.join(form.uploadDir, sanitizedTitle);
+        await fs.mkdir(productFolder, { recursive: true });
+
+        let imgThumbnailPath = '';
+        const imagesPaths = [];
+
+        // Handle Thumbnail
+        if (files.imgThumbnail) {
+          const imgThumbnailFile = Array.isArray(files.imgThumbnail) ? files.imgThumbnail[0] : files.imgThumbnail;
+          const sanitizedThumbnailName = imgThumbnailFile.originalFilename.replace(/\s+/g, '_');
+          imgThumbnailPath = path.join(productFolder, sanitizedThumbnailName);
+
+          // Rename the file to its new location
+          await fs.rename(imgThumbnailFile.filepath, imgThumbnailPath);
+
+          // Add `/productImages` prefix
+          imgThumbnailPath = `${sanitizedTitle}/${sanitizedThumbnailName}`;
+        }
+
+        // Handle Additional Images
+        if (files.imgages) {
+          const images = Array.isArray(files.imgages) ? files.imgages : [files.imgages];
+          for (const file of images) {
+            const sanitizedFileName = file.originalFilename.replace(/\s+/g, '_');
+            const filePath = path.join(productFolder, sanitizedFileName);
+
+            // Rename the file to its new location
+            await fs.rename(file.filepath, filePath);
+
+            // Add `/productImages` prefix
+            imagesPaths.push(`${sanitizedTitle}/${sanitizedFileName}`);
+          }
+        }
+
+        const product = new Product({
+          title: title[0],
+          desc: desc[0],
+          imgThumbnail: imgThumbnailPath,
+          imgages: imagesPaths,
+          category: category[0],
+          size: size[0].split(','), // Convert sizes to array
+          price: parseFloat(price),
+          availableQty: parseInt(availableQty, 10),
+        });
+
+        await product.save();
+        console.log('Product saved:', product);
+        res.status(200).json({ message: 'Product uploaded successfully', product });
       } catch (error) {
-        console.error("Error saving product:", error.message);
-        return res.status(500).json({ success: false, message: "Internal server error" });
+        console.error('Error parsing form:', error);
+        res.status(500).json({ message: 'Error processing form data' });
       }
-    });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   } else {
-    return res.status(405).json({ success: false, message: "Method not allowed" });
+    res.status(405).json({ error: 'Method not allowed' });
   }
 };
 
-export default connectDB(handler);
+export default handler;
