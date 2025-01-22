@@ -58,16 +58,14 @@ const Dashboard = () => {
   }, [trigger]);
 
   return (
-    <Layout>
+    <>
     <div className='min-h-screen'>
       <div className='font-bold text-2xl mb-5  mt-6 ms-4'>Products</div>  {/* Changed font size and margin */}
       
       {/* Wrapper for Products list and Add button */}
    
         
-  {isLoading ? (
-        <Loader></Loader>
-      ) : ( <div className="w-full p-10 space-y-5">
+  {  <div className="w-full p-10 space-y-5">
         {items?.map((item) => (
           <div key={item._id} className="flex justify-center items-center relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -128,11 +126,11 @@ const Dashboard = () => {
             </table>
           </div>
         ))}
-      </div>)
+      </div>
 }
 
     </div>
-    </Layout>);
+    </>);
 };
 
 export default Dashboard;

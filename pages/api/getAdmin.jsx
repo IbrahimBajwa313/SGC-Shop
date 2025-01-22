@@ -1,5 +1,5 @@
 import connectDB from '../../middleware/mongoose';
-import User from '../../models/userModel';
+import User from '../../models/User';
 
 const handler = async (req, res) => {
   if (req.method === 'GET') {

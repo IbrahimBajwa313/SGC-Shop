@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import Layout from '../../components/Layout';
+import { Router } from 'next/router';
 
 export default function ProductUpload() {
 
@@ -69,6 +70,10 @@ console.log('product is',category)
 
       if (response.ok) {
         alert('Product uploaded successfully');
+
+        // Redirect to the admin dashboard
+        router.push('/admin/products');
+
         setProductData({
           title: '',
           desc: '',
@@ -88,8 +93,8 @@ console.log('product is',category)
     }
   };
 
-  return (
-    <Layout>
+  return ( 
+    <>
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-10">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Upload Product</h2>
@@ -225,5 +230,5 @@ console.log('product is',category)
         </div>
       </form>
     </div>
-    </Layout>);
+    </>);
 }

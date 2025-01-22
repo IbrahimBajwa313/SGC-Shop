@@ -2,31 +2,37 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { useUser } from '../context/UserContext'; // Adjust the path based on your project structure
 
 const Login = () => {
-    const [username, setusername] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
+    const { login } = useUser(); // Access the login function from UserContext
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
             const response = await fetch('/api/getAdmin');
-
             const data = await response.json();
-            if (username==data.users[0].username&&password==data.users[0].password) {
+
+            if (username === data.users[0].username && password === data.users[0].password) {
                 // Save token in cookies
-                Cookies.set('authToken', data.users[0]._id, { expires: 1/24 }); // Expires in 1 hour
-                router.push('/admin/dashboard'); // Redirect to the admin dashboard
+                Cookies.set('authToken', data.users[0]._id, { expires: 1 / 24 }); // Expires in 1 hour
+                
+                // Store username in localStorage and update context
+                login({ username });
+                
+                // Redirect to the admin dashboard
+                router.push('/admin/dashboard');
             } else {
-                setError(data.error || 'Invalid credentials');
+                setError('Invalid credentials');
             }
         } catch (err) {
             console.error(err);
-            setError('Something went wrong. Please try again.');
+            setError('Invalid Credentials. Please try again.');
         }
     };
 
@@ -43,18 +49,18 @@ const Login = () => {
                 </div>
                 {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
                 <div className="flex flex-col justify-center items-center mt-10 md:mt-4 space-y-6 md:space-y-8">
-                    <div className="">
-                        <div className="m-1 text-lg text-black text-semibold">username</div>
+                    <div>
+                        <div className="m-1 text-lg text-black text-semibold">Username</div>
                         <input
-                            type="username"
+                            type="text"
                             value={username}
-                            onChange={(e) => setusername(e.target.value)}
+                            onChange={(e) => setUsername(e.target.value)}
                             className="border-b border-black focus:outline-none text-black placeholder:opacity-50 font-semibold md:w-72 lg:w-[340px] bg-transparent"
                             placeholder="Enter your username"
                             required
                         />
                     </div>
-                    <div className="">
+                    <div>
                         <div className="m-1 text-lg text-black text-semibold">Password</div>
                         <input
                             type="password"
@@ -74,14 +80,6 @@ const Login = () => {
                         Login
                     </button>
                 </div>
-            </div>
-            <div className="text-center my-6 flex flex-col">
-                <Link href="/forgotPassword" className="text-sm font-medium text-gray-400 hover:text-violet-500 m-1">
-                    Forgot Password?
-                </Link>
-                <Link href="/signup" className="text-sm font-bold text-gray-400 hover:text-violet-500 m-1">
-                    Not a User? Create New Account
-                </Link>
             </div>
         </motion.div>
     );

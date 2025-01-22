@@ -6,11 +6,11 @@ const handler = async (req, res) => {
     try {
       await connectDB();
 
-      const { name, description } = req.body;
+      const { name } = req.body;
 
       // Validate required fields
-      if (!name || !description) {
-        return res.status(400).json({ error: 'Both name and description are required' });
+      if (!name ) {
+        return res.status(400).json({ error: 'Name required' });
       }
 
       // Check if category already exists
@@ -21,8 +21,7 @@ const handler = async (req, res) => {
 
       // Create new category
       const category = new Category({
-        name,
-        description,
+        name, 
       });
 
       await category.save();
