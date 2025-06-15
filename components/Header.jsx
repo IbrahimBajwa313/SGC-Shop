@@ -134,14 +134,14 @@ console.log('cart is',props)
         <Link href="/">
           <div className="flex items-center space-x-4">
             <Image
-              src="/save-gaza-logo.png"
+              src="/ibi.png"
               alt="Save Gaza Campaign Logo"
               className="h-12 w-12"
               height={48}
               width={48}
             />
             <span className="text-2xl font-bold hover:text-green-500">
-              Save Gaza Campaign
+              IBI Collections
             </span>
           </div>
         </Link>
