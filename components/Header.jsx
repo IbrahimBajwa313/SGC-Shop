@@ -98,7 +98,7 @@ console.log('cart is',props)
                     <div>{keys.title}</div>
                     <Image
                       className="w-20"
-                      src={`/productIamages/${keys.img}/thumbnail.webp`}
+                      src={"/ibi.jpg"}
                       alt="Product Image"
                       width={80}
                       height={80}
@@ -134,9 +134,9 @@ console.log('cart is',props)
         <Link href="/">
           <div className="flex items-center space-x-4">
             <Image
-              src="/ibi.png"
+              src="/ibi.jpg"
               alt="Save Gaza Campaign Logo"
-              className="h-12 w-12"
+              className="h-12 w-12 rounded-full"
               height={48}
               width={48}
             />
